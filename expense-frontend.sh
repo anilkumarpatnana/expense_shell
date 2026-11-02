@@ -48,11 +48,13 @@ validate $? "Downloading frontend files"
 tar -xzf /tmp/frontend.tar.gz -C /usr/share/nginx/html &>> "$log_path"
 validate $? "Extracting frontend files"
 
-sed -i "s/<BACKEND-PRIVATE-IP>/backend.expense.anilkumarpatnana.online/g" /home/ec2-user/repos/expense_shell/expense.conf
-validate $? "Updating Nginx configuration"
 
 cp /home/ec2-user/repos/expense_shell/expense.conf /etc/nginx/default.d/expense.conf &>> "$log_path"
 validate $? "Copying nginx config file to /etc/nginx/default.d/expense.conf"
+
+sed -i "s/<BACKEND-PRIVATE-IP>/backend.expense.anilkumarpatnana.online/g" /etc/nginx/default.d/expense.conf
+validate $? "Updating Nginx configuration"
+
 
 nginx -t &>> "$log_path"
 validate $? "Testing Nginx configuration"
