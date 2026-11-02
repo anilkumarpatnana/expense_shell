@@ -2,12 +2,12 @@
 
 image_id="ami-0055977a6e828a4f4"
 instance_type="t3.micro"
-security_groups="expense-common" "expense-$instance_name"
+security_groups=("expense-common" "expense-$instance_name")
 domain_name="expense.anilkumarpatnana.online"
 hosted_zone_id="Z0932076Y9TWK3RWNWAE"
 
-for $instance_name in $@ {
-
+for instance_name in $@ {
+ do
     if [ "$instance_name" -ne "frontend" ];
         then
         ip=$(aws ec2 run-instances \
@@ -44,7 +44,7 @@ for $instance_name in $@ {
             }
         }]
     }'
-
+ done
 }
 
 
