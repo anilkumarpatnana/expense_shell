@@ -15,7 +15,8 @@ for instance_name in $@ {
                         --instance-type $instance_type \
                         --security-groups $security_groups \
                         --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=expense-$instance_name}]' \
-                        --query 'Instances[0].PrivateIpAddress'
+                        --query 'Instances[0].PrivateIpAddress' \
+                        --output text
             )
         echo "Your $instance_name instance Private IP : $ip"
         else
@@ -24,27 +25,27 @@ for instance_name in $@ {
                         --instance-type $instance_type \
                         --security-groups $security_groups \
                         --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=expense-$instance_name}]' \
-                        --query 'Instances[0].PublicIpAddress'
+                        --query 'Instances[0].PublicIpAddress' \
+                        --output text
             )
         echo "Your $instance_name instance Public IP : $ip"
     fi
     
-    aws route53 change-resource-record-sets \
-    --hosted-zone-id $hosted_zone_id \
-    --change-batch '{
-        "Changes": [{
-            "Action": "UPSERT",
-            "ResourceRecordSet": {
-                "Name": "$instance_name.$domain_name",
-                "Type": "A",
-                "TTL": 1,
-                "ResourceRecords": [{
-                    "Value": "$ip"
+aws route53 change-resource-record-sets \
+    --hosted-zone-id "$hosted_zone_id" \
+    --change-batch "{
+        \"Changes\": [{
+            \"Action\": \"UPSERT\",
+            \"ResourceRecordSet\": {
+                \"Name\": \"$instance_name.$domain_name\",
+                \"Type\": \"A\",
+                \"TTL\": 1,
+                \"ResourceRecords\": [{
+                    \"Value\": \"$ip\"
                 }]
             }
         }]
-    }'
- done
+    }" done
 }
 
 
