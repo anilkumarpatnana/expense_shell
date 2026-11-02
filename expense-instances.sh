@@ -15,7 +15,7 @@ do
         ip=$(aws ec2 run-instances \
                         --image-id $image_id \
                         --instance-type $instance_type \
-                        --security-groups $security_groups \
+                        --security-groups "${security_groups[@]}" \
                         --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=expense-$instance_name}]" \
                         --query 'Instances[0].PrivateIpAddress' \
                         --output text
