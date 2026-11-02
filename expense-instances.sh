@@ -8,7 +8,7 @@ hosted_zone_id="Z0932076Y9TWK3RWNWAE"
 
 for instance_name in $@ {
  do
-    if [ "$instance_name" -ne "frontend" ];
+    if [ "$instance_name" != "frontend" ];
         then
         ip=$(aws ec2 run-instances \
                         --image-id $image_id \
