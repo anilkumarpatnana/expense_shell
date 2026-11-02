@@ -8,7 +8,7 @@ hosted_zone_id="Z0932076Y9TWK3RWNWAE"
 
 for $instance_name in $@ {
 
-    if [ $instance_name -ne "frontend" ];
+    if [ "$instance_name" -ne "frontend" ];
         then
         ip=$(aws ec2 run-instances \
                         --image-id $image_id \
@@ -29,10 +29,7 @@ for $instance_name in $@ {
         echo "Your $instance_name instance Public IP : $ip"
     fi
     
-}
-
-
-aws route53 change-resource-record-sets \
+    aws route53 change-resource-record-sets \
     --hosted-zone-id $hosted_zone_id \
     --change-batch '{
         "Changes": [{
@@ -47,3 +44,7 @@ aws route53 change-resource-record-sets \
             }
         }]
     }'
+
+}
+
+
