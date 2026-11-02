@@ -70,7 +70,7 @@ validate $? "Moving to /app directory"
 npm install &>> "$log_path"
 validate $? "Installing nodejs dependencies using npm"
 
-mkdir -p  /etc/systemd/system/backend.service &>> "$log_path"
+touch /etc/systemd/system/backend.service &>> "$log_path"
 validate $? "Creating a backend service file"
 
 echo "Installing Mysql-client for loading database schema"
