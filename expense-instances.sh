@@ -31,21 +31,23 @@ for instance_name in $@ {
         echo "Your $instance_name instance Public IP : $ip"
     fi
     
-aws route53 change-resource-record-sets \
-    --hosted-zone-id "$hosted_zone_id" \
-    --change-batch "{
-        \"Changes\": [{
-            \"Action\": \"UPSERT\",
-            \"ResourceRecordSet\": {
-                \"Name\": \"$instance_name.$domain_name\",
-                \"Type\": \"A\",
-                \"TTL\": 1,
-                \"ResourceRecords\": [{
-                    \"Value\": \"$ip\"
+        aws route53 change-resource-record-sets \
+            --hosted-zone-id "$hosted_zone_id" \
+            --change-batch "{
+                \"Changes\": [{
+                    \"Action\": \"UPSERT\",
+                    \"ResourceRecordSet\": {
+                        \"Name\": \"$instance_name.$domain_name\",
+                        \"Type\": \"A\",
+                        \"TTL\": 1,
+                        \"ResourceRecords\": [{
+                            \"Value\": \"$ip\"
+                        }]
+                    }
                 }]
-            }
-        }]
-    }" done
+            }" 
+            echo "Your route53 record $instance_name.$domain_name is updated with IP : $ip"
+ done
 }
 
 
