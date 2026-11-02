@@ -30,7 +30,7 @@ validate(){
     fi
 }
 
-sed -i 's/<MYSQL-SERVER-IPADDRESS>/mysql.expense.anilkumarpatnana.online/g' /home/ec2-user/repos/expense_shell/backend.service &>> "$log_path"
+sed -i 's/<MYSQL-SERVER-IPADDRESS>/database.expense.anilkumarpatnana.online/g' /home/ec2-user/repos/expense_shell/backend.service &>> "$log_path"
 validate $? "Adding database domain name in backend service file to interact with database "
 
 
@@ -78,7 +78,7 @@ echo "Installing Mysql-client for loading database schema"
 dnf install mysql -y &>> "$log_path"
 validate $? "Installing mysql-server"
 
-mysql -h mysql.expense.anilkumarpatnana.online -u root -pExpenseApp@1 < /app/schema/backend.sql &>> "$log_path"
+mysql -h database.expense.anilkumarpatnana.online -u root -pExpenseApp@1 < /app/schema/backend.sql &>> "$log_path"
 validate $? "loading database schema"
 
 
@@ -89,7 +89,7 @@ systemctl enable backend &>> "$log_path"
 validate $? "Enabling service backend"
 
 systemctl start backend &>> "$log_path"
-validate $? "Starting service backed"
+validate $? "Starting service backend"
 
 
 end_time=$(date +%s)
