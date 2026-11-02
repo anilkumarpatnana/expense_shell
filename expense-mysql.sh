@@ -29,14 +29,14 @@ validate(){
 
 
 dnf install mysql-server -y &>> $log_path
-validate $@ "Installing mysql-server "
+validate $? "Installing mysql-server "
 
 systemctl enable mysqld &>> $log_path
-validate $@ "Enabling service mysql-server "
+validate $? "Enabling service mysql-server "
 
 systemctl start mysqld &>> $log_path
-validate $@ "Starting service mysql-server "
+validate $? "Starting service mysql-server "
 
 mysql_secure_installation --set-root-pass ExpenseApp@1 &>> $log_path
-validate $@ "Setting up root password for mysql "
+validate $? "Setting up root password for mysql "
 
