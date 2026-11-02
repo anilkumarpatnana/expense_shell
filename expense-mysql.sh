@@ -15,6 +15,8 @@ fi
 echo "=================== Script Started Execution $date_time ====================>"
 
 mkdir -p /var/log/expense_project | tee -a $log_path
+touch  /var/log/expense_project.log | tee -a $log_path
+
 
 validate(){
     if [ $1 -et 0 ];
