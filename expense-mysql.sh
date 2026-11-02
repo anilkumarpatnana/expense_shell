@@ -40,3 +40,7 @@ validate $? "Starting service mysql-server "
 mysql_secure_installation --set-root-pass ExpenseApp@1 &>> "$log_path"
 validate $? "Setting up root password for mysql "
 
+systemctl status mysqld &>> "$log_path"
+validate $? "Mysqld service is running  "
+
+
