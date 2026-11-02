@@ -30,9 +30,6 @@ validate(){
     fi
 }
 
-sed -i 's/<MYSQL-SERVER-IPADDRESS>/database.expense.anilkumarpatnana.online/g' /home/ec2-user/repos/expense_shell/backend.service &>> "$log_path"
-validate $? "Adding database domain name in backend service file to interact with database "
-
 
 dnf module disable nodejs -y &>> "$log_path"
 validate $? "Disabling default module of nodejs "
@@ -81,6 +78,8 @@ validate $? "Installing mysql-server"
 mysql -h database.expense.anilkumarpatnana.online -u root -pExpenseApp@1 < /app/schema/backend.sql &>> "$log_path"
 validate $? "loading database schema"
 
+sed -i 's/<MYSQL-SERVER-IPADDRESS>/database.expense.anilkumarpatnana.online/g' /etc/systemd/system/backend.service &>> "$log_path"
+validate $? "Adding database domain name in backend service file to interact with database "
 
 systemctl daemon-reload &>> "$log_path"
 validate $? "Reloading daemon Systemd"
