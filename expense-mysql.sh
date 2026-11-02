@@ -3,7 +3,6 @@
 user_id=$(id -u)
 log_path="/var/log/expense_project/expense_project.log"
 date_time=$(date "+%F %H %M %S")
-total_time=($)
 start_time=$(date +%s)
 total_time=$((end_time - start_time))
 
