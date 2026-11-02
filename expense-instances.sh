@@ -2,7 +2,6 @@
 
 image_id="ami-0055977a6e828a4f4"
 instance_type="t3.micro"
-instance_name=$@
 security_groups="expense-common" "expense-$instance_name"
 domain_name="expense.anilkumarpatnana.online"
 hosted_zone_id="Z0932076Y9TWK3RWNWAE"
