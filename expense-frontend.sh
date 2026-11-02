@@ -49,12 +49,11 @@ validate $? "Downloading frontend files to /tmp directory"
 tar -xzf /tmp/frontend.tar.gz -C /usr/share/nginx/html &>> "$log_path"
 validate $? "Unzipping files from /tmp to /usr/share/nginx/html "
 
-sed "s/<BACKEND-PRIVATE-IP>/backend.expense.anilkumarpatnana.online/g" /etc/nginx/default.d/expense.conf &>> "$log_path"
-validate $? "Reloading daemon Systemd"
+sed "s/<BACKEND-PRIVATE-IP>/backend.expense.anilkumarpatnana.online/g" \
+    /home/ec2-user/repos/expense_shell/expense.conf \
+    > /etc/nginx/default.d/expense.conf
 
-cp /home/ec2-user/repos/expense_shell/expense.conf  /etc/nginx/default.d/expense.conf &>> "$log_path"
-validate $? "Reloading daemon Systemd"
-
+validate $? "Updating Nginx configuration"
 nginx -t | tee -a "$log_path"
 validate $? "Reloading daemon Systemd"
 
