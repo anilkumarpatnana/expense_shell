@@ -50,11 +50,12 @@ validate $? "Extracting frontend files"
 
 
 cp /home/ec2-user/repos/expense_shell/expense.conf /etc/nginx/default.d/expense.conf &>> "$log_path"
-validate $? "Copying nginx config file to /etc/nginx/default.d/expense.conf"
+validate $? "Copying nginx config file"
 
-sed -i "s/<BACKEND-PRIVATE-IP>/backend.expense.anilkumarpatnana.online/g" /etc/nginx/default.d/expense.conf
+sed -i "s/<BACKEND-PRIVATE-IP>/backend.expense.anilkumarpatnana.online/g" /etc/nginx/default.d/expense.conf &>> "$log_path"
 validate $? "Updating Nginx configuration"
 
+grep "proxy_pass" /etc/nginx/default.d/expense.conf  | tee -a "$log_path"
 
 nginx -t &>> "$log_path"
 validate $? "Testing Nginx configuration"
